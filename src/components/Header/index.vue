@@ -18,7 +18,7 @@
               <router-link class="register" to="/register">注册</router-link>
             </p>
             <!-- 如果登录显示的是用户名字与退出登录 -->
-            <p>
+            <p v-if="false">
               <a>{{}}</a>
               <a class="register" @click="logout">退出登录</a>
             </p>
@@ -66,7 +66,20 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      keyword: "",
+    };
+  },
+  methods: {
+    logout() {},
+    // 搜索按钮的回调函数：需要像search路由跳转
+    goSearch() {
+      this.$router.push("/search");
+    },
+  },
+};
 </script>
 
 <style scoped lang='less'>
