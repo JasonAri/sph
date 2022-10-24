@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header />
+    <!-- 路由组件出口的地方 -->
     <Footer />
   </div>
 </template>
