@@ -14,18 +14,27 @@ export default new VueRouter({
         {
             path: '/home',
             component: Home,
+            // 路由元信息
+            meta: { show: true }
         },
         {
             path: '/login',
             component: Login,
+            meta: { show: false }
         },
         {
-            path: '/search',
+            path: '/search/:keyword?',
             component: Search,
+            meta: { show: true },
+            name: 'search',
+            // props: true, // 只能传params
+            // props: { a: 1, b: 2 }, // 可以传params和其他的一些参数
+            props: ($route) => ({ keyword: $route.params.keyword, k: $route.query.k, a: 1, b: 2, }),
         },
         {
             path: '/register',
             component: Register,
+            meta: { show: false }
         },
         // 重定向（在项目跑起来的时候，访问/，立马定向到首页）
         {

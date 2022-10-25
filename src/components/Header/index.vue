@@ -76,7 +76,26 @@ export default {
     logout() {},
     // 搜索按钮的回调函数：需要像search路由跳转
     goSearch() {
-      this.$router.push("/search");
+      // 路由跳转并传参
+      // 第一种 字符串
+      // this.$router.push(
+      //   "/search/" + this.keyword + "?k=" + this.keyword.toUpperCase()
+      // );
+      // 第二种 模版字符串
+      // this.$router.push(
+      //   `/search/${this.keyword}?k=${this.keyword.toUpperCase()}`
+      // );
+      // 第三种 对象
+      this.$router.push(
+        {
+          name: "search",
+          // path: "/search",
+          params: { keyword: this.keyword },
+          query: { k: this.keyword.toUpperCase() },
+        },
+        () => {},
+        () => {}
+      );
     },
   },
 };
