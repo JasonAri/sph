@@ -4,25 +4,30 @@
       <!-- 事件的委派 -->
       <div @mouseleave="leaveIndex">
         <h2 class="all">全部商品分类</h2>
-        <!--商品分类的地方:虽然刚开始的时候商品分类结构在底部,调整到当前位置，但是页面结构没有太大的变化,因为老师们已经把样式搞定了-->
+        <!-- 分类 -->
         <div class="sort">
-          <div class="all-sort-list2">
+          <!-- 分类类表 -->
+          <div class="all-sort-list2" @click="goSearch">
             <!--一级分类地盘-->
             <div class="item" v-for="(c1, index) in categoryList" :key="c1.categoryId">
               <h3 :class="{ active: currentIndex == index }" @mouseenter="changeIndex(index)">
-                <a href="javascript:;">{{ c1.categoryName }}</a>
+                <a :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId" href="javascript:;">
+                  {{ c1.categoryName }}
+                </a>
               </h3>
-              <div class="item-list clearfix" :style="{display:currentIndex==index?'block':'none'}">
+              <div class="item-list clearfix" :style="{ display: currentIndex == index ? 'block' : 'none' }">
                 <!--二级分类-->
                 <div class="subitem" v-for="(c2, index) in c1.categoryChild" :key="c2.categoryId">
                   <dl class="fore">
                     <dt>
-                      <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">{{ c2.categoryName }}</a>
+                      <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">
+                        {{ c2.categoryName }}
+                      </a>
                     </dt>
                     <dd>
                       <!--三级分类-->
                       <em v-for="(c3, index) in c2.categoryChild" :key="c3.categoryId">
-                        <a>{{ c3.categoryName }}</a>
+                        <a :data-categoryName="c2.categoryName">{{ c3.categoryName }}</a>
                       </em>
                     </dd>
                   </dl>
@@ -33,7 +38,7 @@
         </div>
       </div>
       <nav class="nav">
-        <a href="javascript:;">服装城</a>
+        <a href="javascript:void(0)">服装城</a>
         <a href="javascript:;">美妆馆</a>
         <a href="javascript:;">尚品汇超市</a>
         <a href="javascript:;">全球购</a>
@@ -47,11 +52,11 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
 // 按需引入lodash
-import throttle from "lodash/throttle";
+import throttle from 'lodash/throttle';
 export default {
-  name: "TypeNav",
+  name: 'TypeNav',
   data() {
     return {
       //利用响应式属性,将来存储用户鼠标进入哪一个一级分类的索引值
@@ -70,7 +75,7 @@ export default {
   },
   mounted() {
     // 通知vuex发请求，获取数据，存储在仓库中
-    this.$store.dispatch("categoryList");
+    this.$store.dispatch('categoryList');
   },
   methods: {
     // 鼠标进入一级分类的回调
@@ -81,6 +86,26 @@ export default {
     leaveIndex() {
       this.currentIndex = -1;
     },
+    // 进行路由跳转的方法
+    goSearch(event) {
+      let element = event.target;
+      // dataset属性可以获取当前节点的自定义属性与属性值
+      let { categoryname, category1id, category2id, category3id } = element.dataset;
+      if (categoryname) {
+        // 整理路由跳转的参数
+        let location = { name: 'search' };
+        let query = { categoryName: categoryname };
+        if (category1id) {
+          query.category1id = category1id;
+        } else if (category2id) {
+          query.category2id = category2id;
+        } else if (category3id) {
+          query.category3id = category3id;
+        }
+        location.query = query;
+        this.$router.push(location);
+      }
+    },
   },
 };
 </script>
@@ -88,13 +113,11 @@ export default {
 <style scoped lang="less">
 .type-nav {
   border-bottom: 2px solid #e1251b;
-
   .container {
     width: 1200px;
     margin: 0 auto;
     display: flex;
     position: relative;
-
     .all {
       width: 210px;
       height: 45px;
@@ -105,7 +128,6 @@ export default {
       font-size: 14px;
       font-weight: bold;
     }
-
     .nav {
       a {
         height: 45px;
@@ -115,7 +137,6 @@ export default {
         color: #333;
       }
     }
-
     .sort {
       position: absolute;
       left: 0;
@@ -125,7 +146,6 @@ export default {
       position: absolute;
       background: #fafafa;
       z-index: 999;
-
       .all-sort-list2 {
         .item {
           h3 {
@@ -135,16 +155,13 @@ export default {
             overflow: hidden;
             padding: 0 20px;
             margin: 0;
-
             a {
               color: #333;
             }
-
             &.active {
               background: skyblue;
             }
           }
-
           .item-list {
             position: absolute;
             width: 734px;
@@ -154,22 +171,18 @@ export default {
             border: 1px solid #ddd;
             top: 0;
             z-index: 9999 !important;
-
             .subitem {
               float: left;
               width: 650px;
               padding: 0 4px 0 8px;
-
               dl {
                 border-top: 1px solid #eee;
                 padding: 6px 0;
                 overflow: hidden;
                 zoom: 1;
-
                 &.fore {
                   border-top: 0;
                 }
-
                 dt {
                   float: left;
                   width: 54px;
@@ -178,13 +191,11 @@ export default {
                   padding: 3px 6px 0 0;
                   font-weight: 700;
                 }
-
                 dd {
                   float: left;
                   width: 415px;
                   padding: 3px 0 0;
                   overflow: hidden;
-
                   em {
                     float: left;
                     height: 14px;
@@ -200,12 +211,10 @@ export default {
         }
       }
     }
-
     /*过渡动画:商品分类 进入阶段*/
     .sort-enter {
       height: 0px;
     }
-
     .sort-enter-active {
       transition: all 0.3s;
     }
@@ -215,4 +224,3 @@ export default {
   }
 }
 </style>
-
