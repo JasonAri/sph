@@ -4,10 +4,10 @@ import VueRouter from 'vue-router';
 // 使用VueRouter插件
 Vue.use(VueRouter);
 // 引入路由组件
-import Home from '@/pages/Home';
-import Login from '@/pages/Login';
-import Search from '@/pages/Search';
-import Register from '@/pages/Register';
+import Home from '@/views/Home';
+import Login from '@/views/Login';
+import Search from '@/views/Search';
+import Register from '@/views/Register';
 // 配置路由
 export default new VueRouter({
     routes: [

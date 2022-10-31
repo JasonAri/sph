@@ -2,40 +2,43 @@
   <div class="type-nav">
     <div class="container">
       <!-- 事件的委派 -->
-      <div @mouseleave="leaveIndex">
+      <div @mouseleave="leaveHide" @mouseenter="enterShow">
         <h2 class="all">全部商品分类</h2>
-        <!-- 分类 -->
-        <div class="sort">
-          <!-- 分类类表 -->
-          <div class="all-sort-list2" @click="goSearch">
-            <!--一级分类地盘-->
-            <div class="item" v-for="(c1, index) in categoryList" :key="c1.categoryId">
-              <h3 :class="{ active: currentIndex == index }" @mouseenter="changeIndex(index)">
-                <a :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId" href="javascript:;">
-                  {{ c1.categoryName }}
-                </a>
-              </h3>
-              <div class="item-list clearfix" :style="{ display: currentIndex == index ? 'block' : 'none' }">
-                <!--二级分类-->
-                <div class="subitem" v-for="(c2, index) in c1.categoryChild" :key="c2.categoryId">
-                  <dl class="fore">
-                    <dt>
-                      <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">
-                        {{ c2.categoryName }}
-                      </a>
-                    </dt>
-                    <dd>
-                      <!--三级分类-->
-                      <em v-for="(c3, index) in c2.categoryChild" :key="c3.categoryId">
-                        <a :data-categoryName="c2.categoryName">{{ c3.categoryName }}</a>
-                      </em>
-                    </dd>
-                  </dl>
+        <!-- 过渡动画包裹 -->
+        <transition name="sort">
+          <!-- 分类 -->
+          <div class="sort" v-show="isShow">
+            <!-- 分类类表 -->
+            <div class="all-sort-list2" @click="goSearch">
+              <!--一级分类地盘-->
+              <div class="item" v-for="(c1, index) in categoryList" :key="c1.categoryId">
+                <h3 :class="{ active: currentIndex == index }" @mouseenter="changeIndex(index)">
+                  <a :data-categoryName="c1.categoryName" :data-category1Id="c1.categoryId" href="javascript:;">
+                    {{ c1.categoryName }}
+                  </a>
+                </h3>
+                <div class="item-list clearfix" :style="{ display: currentIndex == index ? 'block' : 'none' }">
+                  <!--二级分类-->
+                  <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
+                    <dl class="fore">
+                      <dt>
+                        <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">
+                          {{ c2.categoryName }}
+                        </a>
+                      </dt>
+                      <dd>
+                        <!--三级分类-->
+                        <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
+                          <a :data-categoryName="c2.categoryName">{{ c3.categoryName }}</a>
+                        </em>
+                      </dd>
+                    </dl>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </transition>
       </div>
       <nav class="nav">
         <a href="javascript:void(0)">服装城</a>
@@ -61,7 +64,7 @@ export default {
     return {
       //利用响应式属性,将来存储用户鼠标进入哪一个一级分类的索引值
       currentIndex: -1,
-      show: true, //默认显示
+      isShow: true, //默认显示
     };
   },
   computed: {
@@ -74,18 +77,32 @@ export default {
     }),
   },
   mounted() {
-    // 通知vuex发请求，获取数据，存储在仓库中
-    this.$store.dispatch('categoryList');
+    // 判断路由
+    if (this.$route.path !== '/home') {
+      // 若不在home路由下，则隐藏
+      this.isShow = false;
+    }
   },
   methods: {
+    // 鼠标进入显示一级分类的回调
+    enterShow() {
+      // 非home路由下，移入展示
+      if (this.$route.path !== '/home') {
+        this.isShow = true;
+      }
+    },
+    // 鼠标离开隐藏一级分类的回调
+    leaveHide() {
+      this.currentIndex = -1;
+      // 非home路由下，离开隐藏
+      if (this.$route.path !== '/home') {
+        this.isShow = false;
+      }
+    },
     // 鼠标进入一级分类的回调
     changeIndex: throttle(function (index) {
       this.currentIndex = index;
     }, 50),
-    // 鼠标离开xxx的回调
-    leaveIndex() {
-      this.currentIndex = -1;
-    },
     // 进行路由跳转的方法
     goSearch(event) {
       let element = event.target;
@@ -216,10 +233,22 @@ export default {
       height: 0px;
     }
     .sort-enter-active {
-      transition: all 0.3s;
+      transition: all 0.5s;
+      overflow: hidden;
     }
     .sort-enter-to {
       height: 461px;
+    }
+    /*过渡动画:商品分类 离开阶段*/
+    .sort-leave {
+      height: 461px;
+    }
+    .sort-leave-active {
+      transition: all 0.5s;
+      overflow: hidden;
+    }
+    .sort-leave-to {
+      height: 0;
     }
   }
 }

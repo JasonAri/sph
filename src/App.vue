@@ -8,14 +8,18 @@
 </template>
 
 <script>
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     Header,
     Footer,
+  },
+  mounted() {
+    // 派发一个action（通知vuex发请求，获取三级导航数据，存储在仓库中）
+    this.$store.dispatch('categoryList');
   },
 };
 </script>
