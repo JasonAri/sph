@@ -44,20 +44,9 @@
         </h1>
         <div class="searchArea">
           <form action="###" class="searchForm">
-            <input
-              type="text"
-              id="autocomplete"
-              class="input-error input-xxlarge"
-              v-model="keyword"
-            />
+            <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword" />
             <!-- 编程式导航:因为有业务 -->
-            <button
-              class="sui-btn btn-xlarge btn-danger"
-              type="button"
-              @click="goSearch"
-            >
-              搜索
-            </button>
+            <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">搜索</button>
           </form>
         </div>
       </div>
@@ -69,7 +58,7 @@
 export default {
   data() {
     return {
-      keyword: "",
+      keyword: '',
     };
   },
   methods: {
@@ -88,10 +77,10 @@ export default {
       // 第三种 对象
       this.$router.push(
         {
-          name: "search",
+          name: 'search',
           // path: "/search",
           params: { keyword: this.keyword },
-          query: { k: this.keyword.toUpperCase() },
+          query: this.$route.query || undefined,
         },
         () => {},
         () => {}
@@ -101,7 +90,7 @@ export default {
 };
 </script>
 
-<style scoped lang='less'>
+<style scoped lang="less">
 .header {
   & > .top {
     background-color: #eaeaea;

@@ -29,7 +29,7 @@
                       <dd>
                         <!--三级分类-->
                         <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                          <a :data-categoryName="c2.categoryName">{{ c3.categoryName }}</a>
+                          <a :data-categoryName="c3.categoryName" :data-category3Id="c3.categoryId">{{ c3.categoryName }}</a>
                         </em>
                       </dd>
                     </dl>
@@ -119,7 +119,11 @@ export default {
         } else if (category3id) {
           query.category3id = category3id;
         }
+        // 整合query参数
         location.query = query;
+        // 合并params参数
+        location.params = this.$route.params || undefined;
+        // push跳转
         this.$router.push(location);
       }
     },
