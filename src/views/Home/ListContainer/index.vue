@@ -4,18 +4,12 @@
       <div class="center">
         <!--banner轮播-->
         <div class="swiper-container" ref="mySwiper">
-          <!-- swiper-wrapper里面每一个slider即为一张图片 -->
-          <div class="swiper-wrapper">
-            <div class="swiper-slide" v-for="item in bannerList" :key="item.id">
+          <!-- 使用elmentUI的走马灯组件，并只允许点击触发 -->
+          <el-carousel trigger="click" height="455px">
+            <el-carousel-item v-for="item in bannerList" :key="item.id">
               <img :src="item.imgUrl" />
-            </div>
-          </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
+            </el-carousel-item>
+          </el-carousel>
         </div>
       </div>
       <div class="right">
