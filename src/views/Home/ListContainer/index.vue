@@ -2,15 +2,12 @@
   <div class="list-container">
     <div class="sortList clearfix">
       <div class="center">
-        <!--banner轮播-->
-        <div class="swiper-container" ref="mySwiper">
-          <!-- 使用elmentUI的走马灯组件，并只允许点击触发 -->
-          <el-carousel trigger="click" height="455px">
-            <el-carousel-item v-for="item in bannerList" :key="item.id">
-              <img :src="item.imgUrl" />
-            </el-carousel-item>
-          </el-carousel>
-        </div>
+        <!-- 轮播图（使用elementUI，并指定click触发） -->
+        <el-carousel trigger="click" height="455px">
+          <el-carousel-item v-for="item in bannerList" :key="item.id">
+            <img :src="item.imgUrl" />
+          </el-carousel-item>
+        </el-carousel>
       </div>
       <div class="right">
         <div class="news">
@@ -78,7 +75,7 @@
           </li>
         </ul>
         <div class="ads">
-          <img src="./images/ad1.png" />
+          <img src="/images/ad1.png" />
         </div>
       </div>
     </div>

@@ -1,8 +1,11 @@
 <template>
   <div class="floor">
     <div class="py-container">
+      <!-- floor标题 -->
       <div class="title clearfix">
+        <!-- floor标题名字 -->
         <h3 class="fl">{{ floor.name }}</h3>
+        <!-- 标题右侧导航 -->
         <div class="fr">
           <ul class="nav-tabs clearfix">
             <li v-for="(nav, index) in floor.navList" :key="index">
@@ -14,34 +17,28 @@
       <div class="tab-content">
         <div class="tab-pane">
           <div class="floor-1">
+            <!-- 左侧板报 -->
             <div class="blockgary">
+              <!-- 家用电器列表 -->
               <ul class="jd-list">
                 <li v-for="(keyword, index) in floor.keywords" :key="index">
                   {{ keyword }}
                 </li>
               </ul>
+              <!-- 左侧板报图 -->
               <img :src="floor.imgUrl" />
             </div>
-            <div class="floorBanner">
-              <div class="swiper-container" ref="floor1Swiper">
-                <div class="swiper-wrapper">
-                  <div
-                    class="swiper-slide"
-                    v-for="(item, index) in floor.carouselList"
-                    :key="item.id"
-                    ref="box"
-                  >
-                    <img :src="item.imgUrl" />
-                  </div>
-                </div>
-                <!-- 如果需要分页器 -->
-                <div class="swiper-pagination"></div>
 
-                <!-- 如果需要导航按钮 -->
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
-              </div>
+            <div class="floorBanner">
+              <!-- 家用电器的轮播图 -->
+              <el-carousel trigger="click" height="360px">
+                <el-carousel-item v-for="item in floor.carouselList" :key="item.id">
+                  <img :src="item.imgUrl" />
+                </el-carousel-item>
+              </el-carousel>
             </div>
+
+            <!-- 右侧分裂图左侧 -->
             <div class="split">
               <span class="floor-x-line"></span>
               <div class="floor-conver-pit">
@@ -51,9 +48,11 @@
                 <img :src="floor.recommendList[1]" />
               </div>
             </div>
+            <!-- 右侧分裂图中部 -->
             <div class="split center">
               <img :src="floor.bigImg" />
             </div>
+            <!-- 右侧分裂图右侧 -->
             <div class="split">
               <span class="floor-x-line"></span>
               <div class="floor-conver-pit">
@@ -71,10 +70,8 @@
 </template>
 
 <script>
-// import Swiper from "swiper";
-// import "swiper/css/swiper.min.css";
 export default {
-  props: ["floor"],
+  props: ['floor'],
 };
 </script>
 
@@ -113,7 +110,7 @@ export default {
               background-color: #fff;
 
               &::after {
-                content: "|";
+                content: '|';
                 padding: 0 10px;
               }
             }
@@ -121,7 +118,7 @@ export default {
             &:nth-child(7) {
               a {
                 &::after {
-                  content: "";
+                  content: '';
                 }
               }
             }
