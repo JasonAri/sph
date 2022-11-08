@@ -28,7 +28,6 @@
               <!-- 左侧板报图 -->
               <img :src="floor.imgUrl" />
             </div>
-
             <div class="floorBanner">
               <!-- 家用电器的轮播图 -->
               <el-carousel trigger="click" height="360px">
@@ -37,7 +36,6 @@
                 </el-carousel-item>
               </el-carousel>
             </div>
-
             <!-- 右侧分裂图左侧 -->
             <div class="split">
               <span class="floor-x-line"></span>

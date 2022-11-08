@@ -12,3 +12,5 @@ export const reqGetBannerList = () => {
 }
 // 获取floor数据
 export const reqGetFloorList = () => mockRequests.get('/floor');
+// 获取搜索模块数据
+export const reqGetSearchInfo = (params) => requests({ url: '/list', method: 'post', data: params });

@@ -5,9 +5,12 @@ Vue.use(Vuex);
 
 // 引入模块仓库
 import home from './home';
+import search from './search';
+
 // 对外暴露Store类的一个实例
 export default new Vuex.Store({
     modules: {
         home,
+        search,
     }
 })
