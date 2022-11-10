@@ -11,11 +11,16 @@
               <a href="#">全部结果</a>
             </li>
           </ul>
+          <!-- 面包屑列表 -->
           <ul class="fl sui-tag">
-            <li class="with-x">手机</li>
-            <li class="with-x">iphone<i>x</i></li>
-            <li class="with-x">华为<i>x</i></li>
-            <li class="with-x">OPPO<i>x</i></li>
+            <li class="with-x" v-if="searchParams.categoryName">
+              {{ searchParams.categoryName }}
+              <i @click="clearCategoryName">x</i>
+            </li>
+            <li class="with-x" v-if="searchParams.keyword">
+              {{ searchParams.keyword }}
+              <i @click="clearKeyword">x</i>
+            </li>
           </ul>
         </div>
 
@@ -112,18 +117,48 @@ export default {
   computed: {
     ...mapGetters(['goodsList', 'attrsList', 'trademarkList']),
   },
-  methods: {
-    getData() {
-      this.$store.dispatch('getSearchList', this.searchParams);
+  watch: {
+    // // 监听路由(简单写法)
+    // $route() {
+    //   // 更新搜索参数
+    //   this.updateSearchParams();
+    //   // 发请求
+    //   this.getData();
+    // },
+    // 监听路由
+    $route: {
+      immediate: true,
+      handler() {
+        console.log('路由变化');
+        this.updateSearchParams();
+        this.getData();
+      },
+      deep: true,
     },
   },
-  beforeMount() {
-    // 合并路由参数对象
-    this.searchParams = { ...this.$route.query, ...this.$route.params };
-    console.log('合并路由参数', this.searchParams);
-  },
-  mounted() {
-    this.getData();
+  methods: {
+    // 更新搜索参数的回调
+    updateSearchParams() {
+      // 将初始化的searchParams参数与路由参数整合
+      this.searchParams = { ...this.$options.data().searchParams, ...this.$route.query, ...this.$route.params };
+      console.log('更新searchParams');
+    },
+    // 发请求的回调
+    getData() {
+      // 通知vuex派发一个action
+      this.$store.dispatch('getSearchList', this.searchParams);
+      console.log('发送请求');
+    },
+    // 清除categoryName的回调
+    clearCategoryName() {
+      // 清楚query参数，路由跳转
+      this.$router.replace({ query: {} });
+    },
+    // 清除keyword的回调
+    clearKeyword() {
+      // 清楚params参数，路由跳转
+      this.$router.replace({ name: 'search', params: {}, query: this.$route.query || undefined });
+    },
   },
 };
 </script>
