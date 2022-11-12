@@ -3,9 +3,11 @@
     <div class="type-wrap logo">
       <div class="fl key brand">品牌</div>
       <div class="value logos">
-      <!-- 品牌的地方 -->
+        <!-- 品牌的地方 -->
         <ul class="logo-list">
-          <li v-for="(trademark,index) in trademarkList" :key="trademark.tmId" >{{trademark.tmName}}</li>
+          <li v-for="(trademark, index) in trademarkList" :key="trademark.tmId" @click="trademarkHandler(trademark)">
+            {{ trademark.tmName }}
+          </li>
         </ul>
       </div>
       <div class="ext">
@@ -14,32 +16,35 @@
       </div>
     </div>
     <!-- 商品属性 -->
-    <div class="type-wrap" v-for="(attr,index) in attrsList" :key="attr.attrId">
-      <div class="fl key">{{attr.attrName}}</div>
+    <div class="type-wrap" v-for="(attr, index) in attrsList" :key="attr.attrId">
+      <div class="fl key">{{ attr.attrName }}</div>
       <!-- 商品属性的属性值 -->
       <div class="fl value">
         <ul class="type-list">
-          <li v-for="(attrValue,index) in attr.attrValueList" :key="index">
-            <a>{{attrValue}}</a>
+          <li v-for="(attrValue, index) in attr.attrValueList" :key="index">
+            <a>{{ attrValue }}</a>
           </li>
         </ul>
       </div>
       <div class="fl ext"></div>
     </div>
-
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters } from 'vuex';
 export default {
-  name: "SearchSelector",
+  name: 'SearchSelector',
   computed: {
-    ...mapGetters(["trademarkList","attrsList"]),
+    ...mapGetters(['trademarkList', 'attrsList']),
   },
-  methods:{
-  
-  }
+  methods: {
+    // 点击事件的回调
+    trademarkHandler(trademark) {
+      // 触发需要数据的组件的事件
+      this.$bus.$emit('trademarkInfo',trademark)
+    },
+  },
 };
 </script>
 

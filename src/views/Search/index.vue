@@ -13,13 +13,20 @@
           </ul>
           <!-- 面包屑列表 -->
           <ul class="fl sui-tag">
+            <!-- 分类 -->
             <li class="with-x" v-if="searchParams.categoryName">
               {{ searchParams.categoryName }}
               <i @click="clearCategoryName">x</i>
             </li>
+            <!-- 关键字 -->
             <li class="with-x" v-if="searchParams.keyword">
               {{ searchParams.keyword }}
               <i @click="clearKeyword">x</i>
+            </li>
+            <!-- 品牌 -->
+            <li class="with-x" v-if="searchParams.trademark">
+              {{ searchParams.trademark.split(':')[1] }}
+              <i @click="clearTrademark">x</i>
             </li>
           </ul>
         </div>
@@ -136,6 +143,20 @@ export default {
       deep: true,
     },
   },
+  mounted() {
+    // 绑定事件总线
+    this.$bus.$on('trademarkInfo', (trademark) => {
+      // 整理品牌自断
+      this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
+      // 发请求
+      this.getData();
+      console.log(trademark);
+    });
+  },
+  beforeDestroy() {
+    // 解绑事件总线
+    this.$bus.$off('trademarkInfo');
+  },
   methods: {
     // 更新搜索参数的回调
     updateSearchParams() {
@@ -158,6 +179,13 @@ export default {
     clearKeyword() {
       // 清楚params参数，路由跳转
       this.$router.replace({ name: 'search', params: {}, query: this.$route.query || undefined });
+    },
+    // 清空tradmark的回调
+    clearTrademark() {
+      // 置空
+      this.searchParams.trademark = undefined;
+      // 发送请求
+      this.getData();
     },
   },
 };
