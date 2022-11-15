@@ -44,12 +44,32 @@
             <div class="navbar-inner filter">
               <!-- 综合|价格排序的地方 -->
               <ul class="sui-nav">
-                <li class="active"><a>综合</a></li>
+                <li :class="{ active: isOrderOne }" @click="changeOrder('1')">
+                  <a
+                    >综合
+                    <!-- 如果为acitve元素，则展示排序情况 -->
+                    <span v-show="isOrderOne">
+                      <!-- 降序 -->
+                      <i v-show="isOrderDesc">⬇︎</i>
+                      <!-- 升序 -->
+                      <i v-show="isOrderAsc">⬆︎</i>
+                    </span>
+                  </a>
+                </li>
                 <li><a>销量</a></li>
                 <li><a>新品</a></li>
                 <li><a>评价</a></li>
-                <li><a>价格⬆︎</a></li>
-                <li><a>价格⬇︎</a></li>
+                <li :class="{ active: isOrderTwo }" @click="changeOrder('2')">
+                  <a
+                    >价格
+                    <span v-show="isOrderTwo">
+                      <!-- 降序 -->
+                      <i v-show="isOrderDesc">⬇︎</i>
+                      <!-- 升序 -->
+                      <i v-show="isOrderAsc">⬆︎</i>
+                    </span></a
+                  >
+                </li>
               </ul>
             </div>
           </div>
@@ -66,7 +86,7 @@
                   </div>
                   <div class="price">
                     <strong>
-                      <em>¥</em>
+                      <em>¥</em>&nbsp;
                       <i>{{ good.price }}.00</i>
                     </strong>
                   </div>
@@ -118,7 +138,7 @@ export default {
         category3Id: '',
         categoryName: '',
         keyword: '',
-        order: '',
+        order: '1:desc',
         pageNo: 1,
         pageSize: 10,
         props: [],
@@ -128,6 +148,18 @@ export default {
   },
   computed: {
     ...mapGetters(['goodsList', 'attrsList', 'trademarkList']),
+    isOrderOne() {
+      return this.searchParams.order.split(':', 1) == 1;
+    },
+    isOrderTwo() {
+      return this.searchParams.order.split(':', 1) == 2;
+    },
+    isOrderDesc() {
+      return this.searchParams.order.indexOf('desc') !== -1;
+    },
+    isOrderAsc() {
+      return this.searchParams.order.indexOf('asc') !== -1;
+    },
   },
   watch: {
     // // 监听路由(简单写法)
@@ -207,6 +239,24 @@ export default {
     clearAttr(index) {
       this.searchParams.props.splice(index, 1);
       // 发送请求
+      this.getData();
+    },
+    // 修改排序的回调
+    changeOrder(flag) {
+      // 解构order
+      let order = this.searchParams.order.split(':'); // order[flag,sort]
+      // 判断是否切换标签
+      if (flag == order[0]) {
+        // 若否，则反转升降序
+        order[1] = order[1] == 'desc' ? 'asc' : 'desc';
+      } else {
+        // 若是，则切换flag，并默认降序
+        order[0] = flag;
+        order[1] = 'desc';
+      }
+      // 拼串
+      this.searchParams.order = `${order[0]}:${order[1]}`;
+      // 发请求
       this.getData();
     },
   },
