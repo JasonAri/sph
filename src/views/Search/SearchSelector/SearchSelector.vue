@@ -21,7 +21,7 @@
       <!-- 商品属性的属性值 -->
       <div class="fl value">
         <ul class="type-list">
-          <li v-for="(attrValue, index) in attr.attrValueList" :key="index">
+          <li v-for="(attrValue, index) in attr.attrValueList" :key="index" @click="attrInfoHandler(attr,attrValue)">
             <a>{{ attrValue }}</a>
           </li>
         </ul>
@@ -41,8 +41,13 @@ export default {
   methods: {
     // 点击事件的回调
     trademarkHandler(trademark) {
-      // 触发需要数据的组件的事件
-      this.$bus.$emit('trademarkInfo',trademark)
+      // 触发需要数据的组件的事件,并传递数据
+      this.$bus.$emit('trademarkInfo', trademark);
+    },
+    // 平台售卖的属性值
+    attrInfoHandler(attr,attrValue) {
+      // 触发事件
+      this.$bus.$emit('attrInfo',attr,attrValue)
     },
   },
 };

@@ -28,6 +28,11 @@
               {{ searchParams.trademark.split(':')[1] }}
               <i @click="clearTrademark">x</i>
             </li>
+            <!-- 平台售卖属性 -->
+            <li class="with-x" v-for="(attrValue, index) in searchParams.props" :key="index">
+              {{ attrValue.split(':')[1] }}
+              <i @click="clearAttr(index)">x</i>
+            </li>
           </ul>
         </div>
 
@@ -144,18 +149,29 @@ export default {
     },
   },
   mounted() {
-    // 绑定事件总线
+    // 订阅trademarkInfo的事件回调
     this.$bus.$on('trademarkInfo', (trademark) => {
-      // 整理品牌自断
+      // 整理品牌
       this.searchParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
       // 发请求
       this.getData();
-      console.log(trademark);
+    });
+    // 订阅attrInfo的事件回调
+    this.$bus.$on('attrInfo', (attr, attrValue) => {
+      // 整理属性
+      let props = `${attr.attrId}:${attrValue}:${attr.attrName}`;
+      // 判断去重
+      if (this.searchParams.props.indexOf(props) == -1) {
+        // 更新props
+        this.searchParams.props.push(props);
+        // 发请求
+        this.getData();
+      }
     });
   },
   beforeDestroy() {
     // 解绑事件总线
-    this.$bus.$off('trademarkInfo');
+    this.$bus.$off();
   },
   methods: {
     // 更新搜索参数的回调
@@ -184,6 +200,12 @@ export default {
     clearTrademark() {
       // 置空
       this.searchParams.trademark = undefined;
+      // 发送请求
+      this.getData();
+    },
+    // 删除attr的回调
+    clearAttr(index) {
+      this.searchParams.props.splice(index, 1);
       // 发送请求
       this.getData();
     },
