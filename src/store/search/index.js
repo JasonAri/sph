@@ -26,8 +26,11 @@ const getters = {
     trademarkList(state) {
         return state.searchList.trademarkList || []
     },
-    attrsList(state){
+    attrsList(state) {
         return state.searchList.attrsList || []
+    },
+    total(state) {
+        return state.searchList.total
     },
 }
 

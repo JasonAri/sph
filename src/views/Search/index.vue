@@ -118,6 +118,7 @@
               @currentPage="currentPage"
             ></Pagination>
           </div> -->
+          <Pagination :pageNo="searchParams.pageNo" :pageSize="searchParams.pageSize" :total="total" :continues="5" />
         </div>
       </div>
     </div>
@@ -140,14 +141,14 @@ export default {
         keyword: '',
         order: '1:desc',
         pageNo: 1,
-        pageSize: 10,
+        pageSize: 5,
         props: [],
         trademark: '',
       },
     };
   },
   computed: {
-    ...mapGetters(['goodsList', 'attrsList', 'trademarkList']),
+    ...mapGetters(['goodsList', 'attrsList', 'trademarkList', 'total']),
     isOrderOne() {
       return this.searchParams.order.split(':', 1) == 1;
     },
@@ -199,6 +200,13 @@ export default {
         // 发请求
         this.getData();
       }
+    });
+    // 订阅更新pageNo的事件
+    this.$bus.$on('pageNoInfo', (newPageNo) => {
+      // 更新pageNo
+      this.searchParams.pageNo = newPageNo;
+      // 发请求
+      this.getData();
     });
   },
   beforeDestroy() {

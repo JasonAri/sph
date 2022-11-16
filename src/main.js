@@ -10,12 +10,16 @@ import { Carousel, CarouselItem } from 'element-ui';
 import '@/mock/mockServe.js';
 // 引入三级联动组件---全局组件
 import TypeNav from '@/components/TypeNav';
+// 引入分页器
+import Pagination from '@/components/Pagination';
 
 // 注册ui
 Vue.use(Carousel);
 Vue.use(CarouselItem);
 // 注册组件(两个参数：全局组件的名字，哪一个组件。)
 Vue.component(TypeNav.name, TypeNav);
+// 注册分页器
+Vue.component(Pagination.name,Pagination);
 
 Vue.config.productionTip = false;
 
