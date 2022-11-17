@@ -8,6 +8,7 @@ import Home from '@/views/Home';
 import Login from '@/views/Login';
 import Search from '@/views/Search';
 import Register from '@/views/Register';
+import Detail from '@/views/Detail'
 // 配置路由
 export default new VueRouter({
     routes: [
@@ -36,10 +37,19 @@ export default new VueRouter({
             component: Register,
             meta: { show: false }
         },
+        {
+            path: '/detail/:skuid',
+            component: Detail,
+            meta: { show: true }
+        },
         // 重定向（在项目跑起来的时候，访问/，立马定向到首页）
         {
             path: '*',
             redirect: '/home',
         }
-    ]
+    ],
+    // 滚动行为
+    scrollBehavior(to, from, savedPosition) {
+        return { x: 0, y: 0 }
+    },
 });
