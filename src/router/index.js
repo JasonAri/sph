@@ -8,7 +8,8 @@ import Home from '@/views/Home';
 import Login from '@/views/Login';
 import Search from '@/views/Search';
 import Register from '@/views/Register';
-import Detail from '@/views/Detail'
+import Detail from '@/views/Detail';
+import AddCartSuccess from '@/views/AddCartSuccess';
 // 配置路由
 export default new VueRouter({
     routes: [
@@ -40,6 +41,12 @@ export default new VueRouter({
         {
             path: '/detail/:skuid',
             component: Detail,
+            meta: { show: true }
+        },
+        {
+            path: '/addcartsuccess',
+            name:'addcartsuccess',
+            component: AddCartSuccess,
             meta: { show: true }
         },
         // 重定向（在项目跑起来的时候，访问/，立马定向到首页）

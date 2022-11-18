@@ -16,7 +16,7 @@ export default {
   name: 'Zoom',
   data() {
     return {
-      index: 1,
+      index: 0,
     };
   },
   computed: {

@@ -1,4 +1,4 @@
-import { reqGoodsInfo } from '@/api';
+import { reqAddOrUpdateShopCart, reqGoodsInfo } from '@/api';
 const state = {
     goodInfo: {}
 }
@@ -8,10 +8,21 @@ const mutations = {
     }
 }
 const actions = {
+    // 获取产品信息的action
     async getGoodInfo({ commit }, skuid) {
         let result = await reqGoodsInfo(skuid);
         if (result.code == 200) {
             commit('GETGOODINFO', result.data);
+        }
+    },
+    // 产品添加的action
+    async addOrUpdateShopCart({ commit }, { skuId, skuNum }) {
+        let result = await reqAddOrUpdateShopCart(skuId, skuNum);
+        // 当前的函数执行后会返回Promise
+        if (result.code == 200) {
+            return 'OK'
+        } else {
+            return Promise.reject()
         }
     }
 }

@@ -88,8 +88,8 @@
               <!-- 购物商品个数的操作地方 -->
               <div class="controls">
                 <input autocomplete="off" class="itxt" v-model="skuNum" @change="handler" />
-                <a href="javascript:" class="plus" @click="skuNum++">+</a>
-                <a href="javascript:" class="mins" @click="skuNum > 1 ? skuNum-- : 1">-</a>
+                <a href="javascript:;" class="plus" @click="skuNum++">+</a>
+                <a href="javascript:;" class="mins" @click="skuNum > 1 ? skuNum-- : 1">-</a>
               </div>
               <div class="add">
                 <!--点击加入购物车按钮:不能用声明式导航,第一个：要发请求（有业务）-->
@@ -358,15 +358,11 @@ export default {
   },
   methods: {
     changeChecked(saleAttrValue, arr) {
-      console.log(this.skuInfo);
-      //响应式数据:对象、数组
-      //数组的响应式数据:变更、替换【基本类型数据、引用类型对象响应式的】
-      //数组里面是基本类型数据：替换、变更    如果对象，不管你怎么玩都是相应的!!!!
-      //排他操作
-      //底下的代码:修改数组里面的对象【相应的式的】,数据变化视图跟这变化！！！
+      // 遍历全部取消高亮
       arr.forEach((item) => {
         item.isChecked = '0';
       });
+      // 将点击的属性高亮
       saleAttrValue.isChecked = '1';
     },
     //数量的表单元素的change回调
@@ -383,14 +379,12 @@ export default {
     },
     //加入购物车按钮
     async addOrUpdateCart() {
-      //派发action:携带的载荷，分别商品的id、商品个数
-      //思考底下的这行代码实质做了一个什么事情?
       //实质就是调用了小仓库里面相应的这个函数->addOrUpdateCart,声明部分加上asyc,这个函数执行的结构一定是Promise
       //返回结果是一个Promise对象【三种状态:pending、成功、失败】，返回状态到底是什么，取决于这个函数addOrUpdateCart返回结果
       try {
-        //成功干什么
-        await this.$store.dispatch('addOrUpdateCart', {
-          skuId: this.$route.params.skuId,
+        // 成功
+        await this.$store.dispatch('addOrUpdateShopCart', {
+          skuId: this.$route.params.skuid,
           skuNum: this.skuNum,
         });
         //路由跳转:携带参数,携带参数一般都是基本类型数据【字符串、数字等等】，引用类型数据白扯【传递过来路由获取不到】！！！
@@ -402,7 +396,7 @@ export default {
           query: { skuNum: this.skuNum },
         });
       } catch (error) {
-        //失败干什么
+        // 失败
         alert('加入购物车失败');
       }
     },
@@ -579,6 +573,10 @@ export default {
               position: relative;
               float: left;
               margin-right: 15px;
+
+              & > a {
+                text-decoration: none;
+              }
 
               .itxt {
                 width: 38px;
