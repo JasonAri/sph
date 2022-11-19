@@ -1,4 +1,5 @@
 // 对于axios进行二次封装 (引入axios和nprogess进度条，创建请求和响应拦截器)
+import { getUUID } from "@/utils/uuid_token";
 import axios from "axios";
 // 引入进度条
 import nProgress from "nprogress";
@@ -12,6 +13,8 @@ const requests = axios.create({
 });
 // 请求拦截器
 requests.interceptors.request.use((config) => {
+    // 请求头添加 userTempId
+    config.headers.userTempId = localStorage.getItem('UUIDTOKEN') ? localStorage.getItem('UUIDTOKEN') : getUUID();
     // 进度条开始
     nProgress.start();
     return config;

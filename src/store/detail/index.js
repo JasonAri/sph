@@ -1,6 +1,6 @@
 import { reqAddOrUpdateShopCart, reqGoodsInfo } from '@/api';
 const state = {
-    goodInfo: {}
+    goodInfo: {},
 }
 const mutations = {
     GETGOODINFO(state, goodInfo) {

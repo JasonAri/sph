@@ -10,9 +10,15 @@ import Search from '@/views/Search';
 import Register from '@/views/Register';
 import Detail from '@/views/Detail';
 import AddCartSuccess from '@/views/AddCartSuccess';
+import ShopCart from '@/views/ShopCart';
 // 配置路由
 export default new VueRouter({
     routes: [
+        // 重定向（在项目跑起来的时候，访问/，立马定向到首页）
+        {
+            path: '*',
+            redirect: '/home',
+        },
         {
             path: '/home',
             component: Home,
@@ -45,15 +51,16 @@ export default new VueRouter({
         },
         {
             path: '/addcartsuccess',
-            name:'addcartsuccess',
+            name: 'addcartsuccess',
             component: AddCartSuccess,
             meta: { show: true }
         },
-        // 重定向（在项目跑起来的时候，访问/，立马定向到首页）
         {
-            path: '*',
-            redirect: '/home',
-        }
+            path: '/shopcart',
+            component: ShopCart,
+            meta: { show: true }
+        },
+
     ],
     // 滚动行为
     scrollBehavior(to, from, savedPosition) {

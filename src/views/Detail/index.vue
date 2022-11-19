@@ -623,6 +623,7 @@ export default {
                 height: 36px;
                 line-height: 36px;
                 display: block;
+                cursor:pointer;
               }
             }
           }
