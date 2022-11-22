@@ -44,7 +44,13 @@
         </h1>
         <div class="searchArea">
           <form action="###" class="searchForm">
-            <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyword" />
+            <input
+              type="text"
+              id="autocomplete"
+              class="input-error input-xxlarge"
+              v-model="keyword"
+              @keyup.enter="goSearch"
+            />
             <!-- 编程式导航:因为有业务 -->
             <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">搜索</button>
           </form>

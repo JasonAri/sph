@@ -1,6 +1,8 @@
 import { reqCartList } from '@/api';
 const state = {
-    cartList: [],
+    cartList: [
+        { cartInfoList: [] }
+    ],
 }
 const mutations = {
     GETCARTLIST(state, cartList) {
@@ -19,7 +21,7 @@ const actions = {
 const getters = {
     // 计算cartInfoList
     cartInfoList(state) {
-        return state.cartList[0].cartInfoList || []
+        return state.cartList[0].cartInfoList
     }
 }
 export default {

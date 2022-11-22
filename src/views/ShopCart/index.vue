@@ -27,9 +27,16 @@
           </li>
           <!-- 数量 -->
           <li class="cart-list-con5">
-            <a href="javascript:void(0)" class="mins">-</a>
-            <input autocomplete="off" type="text" :value="cart.skuNum" minnum="1" class="itxt" />
-            <a href="javascript:void(0)" class="plus">+</a>
+            <a class="mins" @click="handler('minus', -1, cart)">-</a>
+            <input
+              autocomplete="off"
+              type="text"
+              :value="cart.skuNum"
+              minnum="1"
+              class="itxt"
+              @change="handler('change', $event.target.value * 1, cart)"
+            />
+            <a class="plus" @click="handler('add', 1, cart)">+</a>
           </li>
           <!-- 小计 -->
           <li class="cart-list-con6">
@@ -46,7 +53,7 @@
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isAllChecked"/>
+        <input class="chooseAll" type="checkbox" :checked="isAllChecked" />
         <span>全选</span>
       </div>
       <div class="option">
@@ -94,6 +101,33 @@ export default {
     // 获取个人购物车的数据
     getData() {
       this.$store.dispatch('getCartList');
+    },
+    async handler(type, disNum, cart) {
+      switch (type) {
+        case 'add':
+          disNum = 1;
+          break;
+        case 'minus':
+          disNum = cart.skuNum > 1 ? -1 : 0;
+          break;
+        case 'change':
+          // 非数字返回0、非正整数返回0，正数取整
+          if (isNaN(disNum) || disNum < 1) {
+            disNum = 0;
+            // 输入非数字内容时，value值需要通过强制刷新页面重新获取（否则还是现实输入的内容）
+            this.$forceUpdate();
+          } else {
+            disNum = parseInt(disNum) - cart.skuNum;
+          }
+          break;
+      }
+      // 有变化再发请求
+      if (disNum != 0) {
+        // 配发action发请求，改数据
+        await this.$store.dispatch('addOrUpdateShopCart', { skuId: cart.skuId, skuNum: disNum });
+        // 更新数据
+        this.getData();
+      }
     },
   },
 };
@@ -191,6 +225,7 @@ export default {
             text-align: center;
             padding: 8px;
             margin-left: 35%;
+            cursor: pointer;
           }
 
           input {
@@ -210,6 +245,7 @@ export default {
             width: 6px;
             text-align: center;
             padding: 8px;
+            cursor: pointer;
           }
         }
 

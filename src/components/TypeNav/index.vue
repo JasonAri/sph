@@ -22,14 +22,19 @@
                   <div class="subitem" v-for="c2 in c1.categoryChild" :key="c2.categoryId">
                     <dl class="fore">
                       <dt>
-                        <a :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">
+                        <a href="javascript:;" :data-categoryName="c2.categoryName" :data-category2Id="c2.categoryId">
                           {{ c2.categoryName }}
                         </a>
                       </dt>
                       <dd>
                         <!--三级分类-->
                         <em v-for="c3 in c2.categoryChild" :key="c3.categoryId">
-                          <a :data-categoryName="c3.categoryName" :data-category3Id="c3.categoryId">{{ c3.categoryName }}</a>
+                          <a
+                            href="javascript:;"
+                            :data-categoryName="c3.categoryName"
+                            :data-category3Id="c3.categoryId"
+                            >{{ c3.categoryName }}</a
+                          >
                         </em>
                       </dd>
                     </dl>
@@ -156,6 +161,7 @@ export default {
         line-height: 45px;
         font-size: 16px;
         color: #333;
+        text-decoration: none;
       }
     }
     .sort {
@@ -178,9 +184,10 @@ export default {
             margin: 0;
             a {
               color: #333;
+              text-decoration: none;
             }
             &.active {
-              background: skyblue;
+              background: rgb(220, 220, 220);
             }
           }
           .item-list {
