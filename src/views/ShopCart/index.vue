@@ -44,9 +44,9 @@
           </li>
           <!-- 操作 -->
           <li class="cart-list-con7">
-            <a href="#none" class="sindelet">删除</a>
+            <a href="javascript:;" class="sindelet" @click="deleteCartBySkuId(cart)">删除</a>
             <br />
-            <a href="#none">移到收藏</a>
+            <a href="javascript:;">移到收藏</a>
           </li>
         </ul>
       </div>
@@ -57,7 +57,7 @@
         <span>全选</span>
       </div>
       <div class="option">
-        <a href="#none">删除选中的商品</a>
+        <a>删除选中的商品</a>
         <a href="#none">移到我的关注</a>
         <a href="#none">清除下柜商品</a>
       </div>
@@ -102,7 +102,7 @@ export default {
     getData() {
       this.$store.dispatch('getCartList');
     },
-    async handler(type, disNum, cart) {
+    handler(type, disNum, cart) {
       switch (type) {
         case 'add':
           disNum = 1;
@@ -124,10 +124,27 @@ export default {
       // 有变化再发请求
       if (disNum != 0) {
         // 配发action发请求，改数据
-        await this.$store.dispatch('addOrUpdateShopCart', { skuId: cart.skuId, skuNum: disNum });
-        // 更新数据
-        this.getData();
+        this.$store
+          .dispatch('addOrUpdateShopCart', { skuId: cart.skuId, skuNum: disNum })
+          .then(() => {
+            // 成功
+            this.getData();
+          })
+          .catch((reason) => {
+            console.log(reason);
+          });
       }
+    },
+    // 删除商品的回调
+    deleteCartBySkuId(cart) {
+      // 派发action
+      this.$store
+        .dispatch('deleteCartBySkuId', cart.skuId)
+        .then(() => {
+          // 成功
+          this.getData();
+        })
+        .catch((reason) => console.warn(reason));
     },
   },
 };
