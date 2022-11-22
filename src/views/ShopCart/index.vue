@@ -14,7 +14,12 @@
         <ul class="cart-list" v-for="(cart, index) in cartInfoList" :key="cart.id">
           <!-- 选中框 -->
           <li class="cart-list-con1">
-            <input type="checkbox" name="chk_list" :checked="cart.isChecked" />
+            <input
+              type="checkbox"
+              name="chk_list"
+              :checked="cart.isChecked"
+              @change="updateCheckedById(cart, $event)"
+            />
           </li>
           <!-- 商品名 -->
           <li class="cart-list-con2">
@@ -145,6 +150,20 @@ export default {
           this.getData();
         })
         .catch((reason) => console.warn(reason));
+    },
+    // 修改商品选中状态的回调
+    updateCheckedById(cart, event) {
+      let isChecked = event.target.checked ? '1' : '0';
+      // 派发action
+      this.$store
+        .dispatch('updateCheckedById', { skuId: cart.skuId, isChecked })
+        .then(() => {
+          // 更新页面
+          this.getData();
+        })
+        .catch((reason) => {
+          console.warn(reason);
+        });
     },
   },
 };

@@ -29,7 +29,7 @@ requests.interceptors.response.use((res) => {
     // 进度条结束
     nProgress.done();
     // 返回错误
-    return Promise.reject(new error('faile'));
+    return Promise.reject(`响应拦截器：错误代码(${error})`);
 })
 // 默认暴露
 export default requests;
