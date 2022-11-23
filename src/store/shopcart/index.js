@@ -32,7 +32,7 @@ const actions = {
     async updateCheckedById({ commit }, { skuId, isChecked }) {
         let result = await reqUpdateCheckedById(skuId, isChecked);
         if (result.code == 200) {
-            return 'ok';
+            return '修改选中状态成功';
         } else {
             return Promise.reject('请求失败');
         }
@@ -47,6 +47,19 @@ const actions = {
         });
         return Promise.all(PromiseAll);
     },
+    // 修改全选/全不选
+    updateAllCartIsChecked({ dispatch, getters }, isChecked) {
+        console.log(isChecked);
+        // 初始化一个数组
+        let PromiseAll = []
+        // 遍历
+        getters.cartInfoList.forEach(item => {
+            // 不同状态的才发请求
+            let promise = item.isChecked == isChecked ? 'checked一致' : dispatch('updateCheckedById', { skuId: item.skuId, isChecked });
+            PromiseAll.push(promise);
+        });
+        return Promise.all(PromiseAll);
+    }
 }
 const getters = {
     // 计算cartInfoList
