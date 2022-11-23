@@ -64,6 +64,7 @@
           class="chooseAll"
           type="checkbox"
           :checked="isAllChecked && cartInfoList.length > 0"
+          :disabled="cartInfoList.length == 0"
           @click="updateAllCartIsChecked"
         />
         <span>全选</span>
@@ -176,8 +177,7 @@ export default {
     deleteAllCheckedCart() {
       this.$store
         .dispatch('deleteAllCheckedCart')
-        .then((value) => {
-          console.log(value);
+        .then(() => {
           // 发请求更新页面
           this.getData();
         })
@@ -191,7 +191,7 @@ export default {
       // 派发action
       this.$store
         .dispatch('updateAllCartIsChecked', isChecked)
-        .then((value) => {
+        .then(() => {
           // 更新数据
           this.getData();
         })

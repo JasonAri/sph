@@ -49,7 +49,6 @@ const actions = {
     },
     // 修改全选/全不选
     updateAllCartIsChecked({ dispatch, getters }, isChecked) {
-        console.log(isChecked);
         // 初始化一个数组
         let PromiseAll = []
         // 遍历
