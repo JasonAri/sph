@@ -21,7 +21,7 @@ const actions = {
     async deleteCartBySkuId({ commit }, skuId) {
         let result = await reqDeleteCartById(skuId);
         if (result.code == 200) {
-            return 'ok';
+            return '此商品已被删除';
         } else {
             return Promise.reject('请求失败');
         }
@@ -34,6 +34,16 @@ const actions = {
         } else {
             return Promise.reject('请求失败');
         }
+    },
+    // 删除选中的商品
+    deleteAllCheckedCart({ dispatch, getters }) {
+        let PromiseAll = []
+        // 获取全部产品
+        getters.cartInfoList.forEach(item => {
+            let promise = item.isChecked == 1 ? dispatch('deleteCartBySkuId', item.skuId) : '此商品未选中';
+            PromiseAll.push(promise)
+        });
+        return Promise.all(PromiseAll);
     }
 }
 const getters = {

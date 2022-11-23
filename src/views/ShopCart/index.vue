@@ -62,9 +62,9 @@
         <span>全选</span>
       </div>
       <div class="option">
-        <a>删除选中的商品</a>
-        <a href="#none">移到我的关注</a>
-        <a href="#none">清除下柜商品</a>
+        <a href="javascript:;" @click="deleteAllCheckedCart">删除选中的商品</a>
+        <a href="javascript:;">移到我的关注</a>
+        <a href="javascript:;">清除下柜商品</a>
       </div>
       <div class="money-box">
         <div class="chosed">已选择 <span>0</span>件商品</div>
@@ -159,6 +159,19 @@ export default {
         .dispatch('updateCheckedById', { skuId: cart.skuId, isChecked })
         .then(() => {
           // 更新页面
+          this.getData();
+        })
+        .catch((reason) => {
+          console.warn(reason);
+        });
+    },
+    // 删除选中商品的回调
+    deleteAllCheckedCart() {
+      this.$store
+        .dispatch('deleteAllCheckedCart')
+        .then((value) => {
+          console.log(value);
+          // 发请求更新页面
           this.getData();
         })
         .catch((reason) => {
