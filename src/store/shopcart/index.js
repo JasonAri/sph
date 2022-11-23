@@ -10,11 +10,13 @@ const mutations = {
     }
 }
 const actions = {
-    // 获取
+    // 获取的购物车列表
     async getCartList({ commit }) {
         let result = await reqCartList();
-        if (result.code == 200) {
+        if (result.code == 200 && result.data[0]) {
             commit('GETCARTLIST', result.data);
+        } else {
+            commit('GETCARTLIST', [{ cartInfoList: [] }]);
         }
     },
     // 删除
@@ -44,7 +46,7 @@ const actions = {
             PromiseAll.push(promise)
         });
         return Promise.all(PromiseAll);
-    }
+    },
 }
 const getters = {
     // 计算cartInfoList

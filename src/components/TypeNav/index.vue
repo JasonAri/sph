@@ -9,7 +9,7 @@
           <!-- 分类 -->
           <div class="sort" v-show="isShow">
             <!-- 分类类表 -->
-            <div class="all-sort-list2" @click="goSearch">
+            <div class="all-sort-list2" @click="goSearch" v-if="categoryList[0]">
               <!--一级分类地盘-->
               <div class="item" v-for="(c1, index) in categoryList" :key="c1.categoryId">
                 <h3 :class="{ active: currentIndex == index }" @mouseenter="changeIndex(index)">
@@ -42,6 +42,8 @@
                 </div>
               </div>
             </div>
+            <!-- 数据返回前显示骨架屏 -->
+            <el-skeleton v-else style="margin-top: 16px" :rows="12" animated />
           </div>
         </transition>
       </div>

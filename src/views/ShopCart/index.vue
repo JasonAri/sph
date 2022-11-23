@@ -10,7 +10,7 @@
         <div class="cart-th5">小计（元）</div>
         <div class="cart-th6">操作</div>
       </div>
-      <div class="cart-body">
+      <div v-if="cartInfoList[0]" class="cart-body">
         <ul class="cart-list" v-for="(cart, index) in cartInfoList" :key="cart.id">
           <!-- 选中框 -->
           <li class="cart-list-con1">
@@ -55,10 +55,12 @@
           </li>
         </ul>
       </div>
+      <!-- 无商品时显示 -->
+      <el-empty description="暂无商品" v-else></el-empty>
     </div>
     <div class="cart-tool">
       <div class="select-all">
-        <input class="chooseAll" type="checkbox" :checked="isAllChecked" />
+        <input class="chooseAll" type="checkbox" :checked="isAllChecked && cartInfoList.length > 0" />
         <span>全选</span>
       </div>
       <div class="option">

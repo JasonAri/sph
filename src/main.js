@@ -5,7 +5,7 @@ import store from '@/store';
 // 引入路由
 import router from '@/router';
 // 按需引入element-UI
-import { Carousel, CarouselItem,Icon } from 'element-ui';
+import { Carousel, CarouselItem, Icon, skeleton, skeletonItem, empty } from 'element-ui';
 // 引入mockServe（使其执行一次mock）
 import '@/mock/mockServe.js';
 // 引入三级联动组件---全局组件
@@ -17,10 +17,13 @@ import Pagination from '@/components/Pagination';
 Vue.use(Carousel);
 Vue.use(CarouselItem);
 Vue.use(Icon);
+Vue.use(skeleton);
+Vue.use(skeletonItem);
+Vue.use(empty);
 // 注册组件(两个参数：全局组件的名字，哪一个组件。)
 Vue.component(TypeNav.name, TypeNav);
 // 注册分页器
-Vue.component(Pagination.name,Pagination);
+Vue.component(Pagination.name, Pagination);
 
 Vue.config.productionTip = false;
 
@@ -30,7 +33,7 @@ new Vue({
   router,
   // 注册仓库 ($store属性)
   store,
-  beforeCreate(){
-    Vue.prototype.$bus=this // 安装全局事件总线，$bus就是当前应用的vm
+  beforeCreate() {
+    Vue.prototype.$bus = this // 安装全局事件总线，$bus就是当前应用的vm
   },
 }).$mount('#app')
