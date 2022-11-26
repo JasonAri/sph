@@ -1,10 +1,16 @@
-import { reqGetCode, reqUserRegister } from '@/api'
+import { reqGetCode, reqUserLogin, reqUserRegister } from '@/api'
 const state = {
-    code: ''
+    code: '',
+    userId: '',
+    token: '',
 }
 const mutations = {
     GETCODE(state, code) {
         state.code = code;
+    },
+    USERLOGIN(state, data) {
+        state.userId = data.userId;
+        state.token = data.token;
     }
 }
 const actions = {
@@ -26,6 +32,17 @@ const actions = {
             return '注册成功';
         } else {
             return Promise.reject(result.message);
+        }
+    },
+    // 登录
+    async userLogin({ commit }, user) {
+        let result = await reqUserLogin(user);
+        console.log(result);
+        if (result.code == 200) {
+            commit('USERLOGIN', result.data);
+            return '登录成功'
+        } else {
+            return Promise.reject(`登录失败,${result.message}`);
         }
     }
 }
