@@ -16,7 +16,7 @@ const actions = {
         }
     },
     // 产品添加的action
-    async addOrUpdateShopCart({ commit }, { skuId, skuNum }) {
+    async addOrUpdateShopCart(_, { skuId, skuNum }) {
         let result = await reqAddOrUpdateShopCart(skuId, skuNum);
         // 当前的函数执行后会返回Promise
         if (result.code == 200) {

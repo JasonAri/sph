@@ -7,7 +7,7 @@
           <div class="loginList">
             <p>尚品汇欢迎您！</p>
             <!-- 没有登录：显示登录与注册 -->
-            <p>
+            <p v-if="!userName">
               <span>请</span>
               <!-- <a href="###">登录</a> -->
               <!-- 
@@ -18,9 +18,9 @@
               <router-link class="register" to="/register">注册</router-link>
             </p>
             <!-- 如果登录显示的是用户名字与退出登录 -->
-            <p v-if="false">
-              <a>{{}}</a>
-              <a class="register" @click="logout">退出登录</a>
+            <p v-else>
+              <a>{{ userName }}</a>
+              <a href="javascript:;" class="register" @click="logout">退出登录</a>
             </p>
           </div>
           <div class="typeList">
@@ -67,8 +67,30 @@ export default {
       keyword: '',
     };
   },
+  computed: {
+    // 用户名
+    userName() {
+      return this.$store.state.user.userInfo.name;
+    },
+  },
   methods: {
-    logout() {},
+    // 登出的回调
+    logout() {
+      if (confirm('确认退出登录？')) {
+        // 派发action
+        this.$store
+          .dispatch('userLogout')
+          .then(() => {
+            // 清除本地token
+            localStorage.removeItem('TOKEN');
+            // 回到首页
+            this.$router.push('/home');
+          })
+          .catch((reason) => {
+            console.warn(reason);
+          });
+      }
+    },
     // 搜索按钮的回调函数：需要像search路由跳转
     goSearch() {
       // 路由跳转并传参

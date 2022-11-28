@@ -3,6 +3,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 // 使用VueRouter插件
 Vue.use(VueRouter);
+// 引入仓库
+import store from '@/store';
 // 引入路由组件
 import Home from '@/views/Home';
 import Login from '@/views/Login';
@@ -12,7 +14,7 @@ import Detail from '@/views/Detail';
 import AddCartSuccess from '@/views/AddCartSuccess';
 import ShopCart from '@/views/ShopCart';
 // 配置路由
-export default new VueRouter({
+let router = new VueRouter({
     routes: [
         // 重定向（在项目跑起来的时候，访问/，立马定向到首页）
         {
@@ -67,3 +69,36 @@ export default new VueRouter({
         return { x: 0, y: 0 }
     },
 });
+
+// 全局前置守卫
+router.beforeEach((to, from, next) => {
+    // 判断token
+    if (localStorage.getItem('TOKEN')) {
+        // 判断userInfo
+        if (store.state.user.userInfo.name) {
+            // 判断跳转login
+            if (to.path == '/login') {
+                // 拒绝跳转
+                next(false);
+            } else { next() }
+        } else {
+            // 有token无userInfo
+            // 发请求拿userInfo
+            store.dispatch('getUserInfo').then(() => {
+                // 拿到userInfo，并放行
+                next();
+                console.log('router:发现没有userInfo，发了一次请求，并放行');
+            }).catch(() => {
+                // token失效，删除token
+                localStorage.removeItem('TOKEN');
+                // 重新跳转到主页
+                next('/home');
+            });
+        }
+    } else {
+        // 没有token（游客模式）
+        next();
+    }
+});
+
+export default router;

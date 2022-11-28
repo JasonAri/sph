@@ -20,7 +20,7 @@ const mutations = {
     }
 };
 const actions = {
-    // 通过API里面的接口函数，
+    // 获取三级导航栏数据
     async categoryList({ commit }) {
         let result = await reqCategoryList();
         if (result.code == 200) {

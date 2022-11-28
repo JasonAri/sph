@@ -1,8 +1,8 @@
-import { reqGetCode, reqUserLogin, reqUserRegister } from '@/api'
+import { reqGetCode, reqUserLogin, reqUserRegister, reqUserInfo, reqLogout } from '@/api'
 const state = {
     code: '',
     userId: '',
-    token: '',
+    userInfo: {},
 }
 const mutations = {
     GETCODE(state, code) {
@@ -10,7 +10,12 @@ const mutations = {
     },
     USERLOGIN(state, data) {
         state.userId = data.userId;
-        state.token = data.token;
+    },
+    GETUSERINFO(state, userInfo) {
+        state.userInfo = userInfo;
+    },
+    USERLOGOUT(state) {
+        state.userInfo = {};
     }
 }
 const actions = {
@@ -37,12 +42,31 @@ const actions = {
     // 登录
     async userLogin({ commit }, user) {
         let result = await reqUserLogin(user);
-        console.log(result);
         if (result.code == 200) {
             commit('USERLOGIN', result.data);
-            return '登录成功'
+            return result.data.token;
         } else {
             return Promise.reject(`登录失败,${result.message}`);
+        }
+    },
+    // 获取用户信息
+    async getUserInfo({ commit }) {
+        let result = await reqUserInfo();
+        if (result.code == 200) {
+            commit('GETUSERINFO', result.data)
+            return 'ok'
+        } else {
+            return Promise.reject(result.message);
+        }
+    },
+    // 登出
+    async userLogout({ commit }) {
+        let result = await reqLogout();
+        if (result.code == 200) {
+            commit('USERLOGOUT');
+            return 'ok';
+        } else {
+            return Promise.reject(result.message);
         }
     }
 }

@@ -21,6 +21,9 @@ export default {
     // 派发一个action（通知vuex发请求，获取三级导航数据，存储在仓库中）
     this.$store.dispatch('categoryList');
   },
+  beforeDestroy() {
+    localStorage.removeItem('TOKEN');
+  },
 };
 </script>
 

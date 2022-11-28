@@ -14,7 +14,7 @@
           </ul>
 
           <div class="content">
-            <form action="##">
+            <form>
               <div class="input-text clearFix">
                 <span></span>
                 <input type="text" placeholder="邮箱/用户名/手机号" v-model="phone" />
@@ -24,13 +24,10 @@
                 <input type="password" placeholder="请输入密码" v-model="password" />
               </div>
               <div class="setting clearFix">
-                <label class="checkbox inline">
-                  <input name="m1" type="checkbox" value="2" checked="" />
-                  自动登录
-                </label>
+                <label class="checkbox inline"> <input type="checkbox" v-model="isAutoLogin" /> 自动登录 </label>
                 <span class="forget">忘记密码？</span>
               </div>
-              <button class="btn" @click="userLogin">登&nbsp;&nbsp;录</button>
+              <button class="btn" type="button" @click="userLogin">登&nbsp;&nbsp;录</button>
             </form>
 
             <div class="call clearFix">
@@ -69,6 +66,7 @@ export default {
   name: 'Login',
   data() {
     return {
+      isAutoLogin: true,
       phone: '',
       password: '',
     };
@@ -82,7 +80,10 @@ export default {
         this.$store
           .dispatch('userLogin', { phone, password })
           .then((value) => {
-            alert(value,'即将跳转到首页');
+            // 自动登录为真，存入本地，否则存入会话
+            // this.isAutoLogin ? localStorage.setItem('TOKEN', value) : sessionStorage.setItem('TOKEN', value);
+            localStorage.setItem('TOKEN', value);
+            alert('登录成功，即将跳转到首页');
             // 跳转首页
             this.$router.push('/home');
           })
