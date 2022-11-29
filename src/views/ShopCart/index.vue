@@ -58,6 +58,7 @@
       <!-- 无商品时显示 -->
       <el-empty description="暂无商品" v-else></el-empty>
     </div>
+    <!-- 购物车底部工具栏 -->
     <div class="cart-tool">
       <div class="select-all">
         <input
@@ -81,7 +82,7 @@
           <i class="summoney">{{ totalPrice }}</i>
         </div>
         <div class="sumbtn">
-          <a class="sum-btn" href="###" target="_blank">结算</a>
+          <router-link class="sum-btn" to="/trade">结算</router-link>
         </div>
       </div>
     </div>

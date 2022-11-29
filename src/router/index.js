@@ -13,6 +13,8 @@ import Register from '@/views/Register';
 import Detail from '@/views/Detail';
 import AddCartSuccess from '@/views/AddCartSuccess';
 import ShopCart from '@/views/ShopCart';
+import Trade from '@/views/Trade';
+import Pay from '@/views/Pay';
 // 配置路由
 let router = new VueRouter({
     routes: [
@@ -62,7 +64,16 @@ let router = new VueRouter({
             component: ShopCart,
             meta: { show: true }
         },
-
+        {
+            path: '/trade',
+            component: Trade,
+            meta: { show: true }
+        },
+        {
+            path: '/pay',
+            component: Pay,
+            meta: { show: true }
+        },
     ],
     // 滚动行为
     scrollBehavior(to, from, savedPosition) {
