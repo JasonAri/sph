@@ -15,6 +15,7 @@ import AddCartSuccess from '@/views/AddCartSuccess';
 import ShopCart from '@/views/ShopCart';
 import Trade from '@/views/Trade';
 import Pay from '@/views/Pay';
+import PaySuccess from '@/views/PaySuccess';
 // 配置路由
 let router = new VueRouter({
     routes: [
@@ -72,6 +73,11 @@ let router = new VueRouter({
         {
             path: '/pay',
             component: Pay,
+            meta: { show: true }
+        },
+        {
+            path: '/paysuccess',
+            component: PaySuccess,
             meta: { show: true }
         },
     ],

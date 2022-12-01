@@ -5,13 +5,15 @@ import store from '@/store';
 // 引入路由
 import router from '@/router';
 // 按需引入element-UI
-import { Carousel, CarouselItem, Icon, skeleton, skeletonItem, empty } from 'element-ui';
+import { Carousel, CarouselItem, Icon, skeleton, skeletonItem, empty, MessageBox } from 'element-ui';
 // 引入mockServe（使其执行一次mock）
 import '@/mock/mockServe.js';
 // 引入三级联动组件---全局组件
 import TypeNav from '@/components/TypeNav';
 // 引入分页器
 import Pagination from '@/components/Pagination';
+// 统一引入api
+import *as API from '@/api'
 
 // 注册ui
 Vue.use(Carousel);
@@ -20,6 +22,8 @@ Vue.use(Icon);
 Vue.use(skeleton);
 Vue.use(skeletonItem);
 Vue.use(empty);
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
 // 注册组件(两个参数：全局组件的名字，哪一个组件。)
 Vue.component(TypeNav.name, TypeNav);
 // 注册分页器
@@ -35,5 +39,6 @@ new Vue({
   store,
   beforeCreate() {
     Vue.prototype.$bus = this // 安装全局事件总线，$bus就是当前应用的vm
+    Vue.prototype.$API = API // 安装API
   },
 }).$mount('#app')
