@@ -14,6 +14,9 @@ const actions = {
         let result = await reqGetSearchInfo(params);
         if (result.code == 200) {
             commit('GETSEACHLIST', result.data)
+            return 'ok'
+        }else{
+            return Promise.reject('failed')
         }
     }
 }

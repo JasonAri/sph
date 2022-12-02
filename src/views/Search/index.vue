@@ -75,38 +75,155 @@
           </div>
 
           <!-- 商品展示区域 -->
-          <div class="goods-list">
-            <ul class="yui3-g">
-              <li class="yui3-u-1-5" v-for="(good, index) in goodsList" :key="good.id">
-                <div class="list-wrap">
-                  <div class="p-img">
-                    <router-link :to="`/detail/${good.id}`">
-                      <img :src="good.defaultImg" />
-                    </router-link>
-                  </div>
-                  <div class="price">
-                    <strong>
-                      <em>¥</em>&nbsp;
-                      <i>{{ good.price }}.00</i>
-                    </strong>
-                  </div>
-                  <div class="attr">
-                    <a :title="good.title">{{ good.title }}</a>
-                  </div>
-                  <div class="commit">
-                    <i class="command"
-                      >已有<span>{{ good.id }}</span
-                      >人评价</i
-                    >
-                  </div>
-                  <div class="operate">
-                    <a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger">加入购物车</a>
-                    <a href="javascript:void(0);" class="sui-btn btn-bordered">收藏</a>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
+          <el-skeleton :loading="loading" animated>
+            <template slot="template">
+              <div class="goods-list">
+                <ul class="yui3-g">
+                  <li class="yui3-u-1-5">
+                    <div class="list-wrap">
+                      <div class="p-img">
+                        <el-skeleton-item variant="image" style="width: 215px; height: 255px" />
+                      </div>
+                      <div class="price">
+                        <el-skeleton-item style="width: 50%" />
+                      </div>
+                      <div class="attr">
+                        <el-skeleton-item />
+                        <el-skeleton-item />
+                      </div>
+                      <div class="commit">
+                        <el-skeleton-item style="width: 50%" />
+                      </div>
+                      <div class="operate">
+                        <el-skeleton-item style="width: 45%" />
+                        <el-skeleton-item style="width: 45%; margin-left: 10%" />
+                      </div>
+                    </div>
+                  </li>
+                  <li class="yui3-u-1-5">
+                    <div class="list-wrap">
+                      <div class="p-img">
+                        <el-skeleton-item variant="image" style="width: 215px; height: 255px" />
+                      </div>
+                      <div class="price">
+                        <el-skeleton-item style="width: 50%" />
+                      </div>
+                      <div class="attr">
+                        <el-skeleton-item />
+                        <el-skeleton-item />
+                      </div>
+                      <div class="commit">
+                        <el-skeleton-item style="width: 50%" />
+                      </div>
+                      <div class="operate">
+                        <el-skeleton-item style="width: 45%" />
+                        <el-skeleton-item style="width: 45%; margin-left: 10%" />
+                      </div>
+                    </div>
+                  </li>
+                  <li class="yui3-u-1-5">
+                    <div class="list-wrap">
+                      <div class="p-img">
+                        <el-skeleton-item variant="image" style="width: 215px; height: 255px" />
+                      </div>
+                      <div class="price">
+                        <el-skeleton-item style="width: 50%" />
+                      </div>
+                      <div class="attr">
+                        <el-skeleton-item />
+                        <el-skeleton-item />
+                      </div>
+                      <div class="commit">
+                        <el-skeleton-item style="width: 50%" />
+                      </div>
+                      <div class="operate">
+                        <el-skeleton-item style="width: 45%" />
+                        <el-skeleton-item style="width: 45%; margin-left: 10%" />
+                      </div>
+                    </div>
+                  </li>
+                  <li class="yui3-u-1-5">
+                    <div class="list-wrap">
+                      <div class="p-img">
+                        <el-skeleton-item variant="image" style="width: 215px; height: 255px" />
+                      </div>
+                      <div class="price">
+                        <el-skeleton-item style="width: 50%" />
+                      </div>
+                      <div class="attr">
+                        <el-skeleton-item />
+                        <el-skeleton-item />
+                      </div>
+                      <div class="commit">
+                        <el-skeleton-item style="width: 50%" />
+                      </div>
+                      <div class="operate">
+                        <el-skeleton-item style="width: 45%" />
+                        <el-skeleton-item style="width: 45%; margin-left: 10%" />
+                      </div>
+                    </div>
+                  </li>
+                  <li class="yui3-u-1-5">
+                    <div class="list-wrap">
+                      <div class="p-img">
+                        <el-skeleton-item variant="image" style="width: 215px; height: 255px" />
+                      </div>
+                      <div class="price">
+                        <el-skeleton-item style="width: 50%" />
+                      </div>
+                      <div class="attr">
+                        <el-skeleton-item />
+                        <el-skeleton-item />
+                      </div>
+                      <div class="commit">
+                        <el-skeleton-item style="width: 50%" />
+                      </div>
+                      <div class="operate">
+                        <el-skeleton-item style="width: 45%" />
+                        <el-skeleton-item style="width: 45%; margin-left: 10%" />
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </template>
+            <template>
+              <div class="goods-list">
+                <ul class="yui3-g">
+                  <li class="yui3-u-1-5" v-for="(good, index) in goodsList" :key="good.id">
+                    <div class="list-wrap">
+                      <div class="p-img">
+                        <router-link :to="`/detail/${good.id}`">
+                          <img :src="good.defaultImg" />
+                        </router-link>
+                      </div>
+                      <div class="price">
+                        <strong>
+                          <em>¥</em>&nbsp;
+                          <i>{{ good.price }}.00</i>
+                        </strong>
+                      </div>
+                      <div class="attr">
+                        <a :title="good.title">{{ good.title }}</a>
+                      </div>
+                      <div class="commit">
+                        <i class="command"
+                          >已有<span>{{ good.id }}</span
+                          >人评价</i
+                        >
+                      </div>
+                      <div class="operate">
+                        <a href="success-cart.html" target="_blank" class="sui-btn btn-bordered btn-danger"
+                          >加入购物车</a
+                        >
+                        <a href="javascript:void(0);" class="sui-btn btn-bordered">收藏</a>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div></template
+            >
+          </el-skeleton>
 
           <!-- 分页的地方 -->
           <!-- <div class="fr page">
@@ -132,6 +249,8 @@ export default {
   components: { SearchSelector },
   data() {
     return {
+      // 显示骨架图
+      loading: true,
       // 初始化路由参数对象
       searchParams: {
         category1Id: '',
@@ -175,8 +294,10 @@ export default {
       immediate: true,
       handler() {
         console.log('路由变化');
-        this.updateSearchParams();
-        this.getData();
+        // 开启骨架图
+        this.loading = true;
+        this.updateSearchParams(); // 更新路由参数
+        this.getData(); // 获取最新结果
       },
       deep: true,
     },
@@ -223,7 +344,12 @@ export default {
     // 发请求的回调
     getData() {
       // 通知vuex派发一个action
-      this.$store.dispatch('getSearchList', this.searchParams);
+      this.$store.dispatch('getSearchList', this.searchParams).then(() => {
+        setTimeout(() => {
+          // 关闭骨架图
+          this.loading = false;
+        }, 500);
+      });
       console.log('发送请求');
     },
     // 清除categoryName的回调
@@ -409,6 +535,7 @@ export default {
                 padding-left: 15px;
                 width: 215px;
                 height: 255px;
+                overflow: hidden;
 
                 a {
                   color: #666;
