@@ -83,9 +83,9 @@ export default {
             // 自动登录为真，存入本地，否则存入会话
             // this.isAutoLogin ? localStorage.setItem('TOKEN', value) : sessionStorage.setItem('TOKEN', value);
             localStorage.setItem('TOKEN', value);
-            alert('登录成功，即将跳转到首页');
-            // 跳转首页
-            this.$router.push('/home');
+            // 判断有没有query，有则去，没有则去home
+            let toPath = this.$route.query.redirect || '/home';
+            this.$router.push(toPath);
           })
           .catch((reason) => {
             alert(reason);

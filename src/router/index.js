@@ -72,12 +72,27 @@ let router = new VueRouter({
         {
             path: '/trade',
             component: Trade,
-            meta: { show: true }
+            meta: { show: true },
+            beforeEnter: (to, from, next) => {
+                console.log(from.path, to.path)
+                if (from.path == '/shopcart' || from.path == '/') {
+                    next();
+                } else {
+                    next(false);
+                }
+            },
         },
         {
             path: '/pay',
             component: Pay,
-            meta: { show: true }
+            meta: { show: true },
+            beforeEnter: (to, from, next) => {
+                if (from.path == '/trade' || from.path == '/') {
+                    next();
+                } else {
+                    next(false);
+                }
+            }
         },
         {
             path: '/paysuccess',
@@ -129,7 +144,6 @@ router.beforeEach((to, from, next) => {
             store.dispatch('getUserInfo').then(() => {
                 // 拿到userInfo，并放行
                 next();
-                console.log('router:发现没有userInfo，发了一次请求，并放行');
             }).catch(() => {
                 // token失效，删除token
                 localStorage.removeItem('TOKEN');
@@ -138,8 +152,14 @@ router.beforeEach((to, from, next) => {
             });
         }
     } else {
-        // 没有token（游客模式）
-        next();
+        // 没有token（未登录）不能去 pay/paysuccess/center
+        let toPath = to.path;
+        if (toPath.indexOf('/pay') != -1 || toPath.indexOf('/paysuccess') != -1 || toPath.indexOf('/center') != -1) {
+            // 把未登录的路径保存为query参数存起来
+            next('/login?redirect=' + toPath);
+        } else {
+            next();
+        }
     }
 });
 
