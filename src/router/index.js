@@ -5,7 +5,7 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 // 引入仓库
 import store from '@/store';
-// 引入路由组件
+// 引入一级路由组件
 import Home from '@/views/Home';
 import Login from '@/views/Login';
 import Search from '@/views/Search';
@@ -16,6 +16,10 @@ import ShopCart from '@/views/ShopCart';
 import Trade from '@/views/Trade';
 import Pay from '@/views/Pay';
 import PaySuccess from '@/views/PaySuccess';
+import Center from '@/views/Center';
+// 引入二级路由组件
+import MyOrder from '@/views/Center/myOrder';
+import GroupOrder from '@/views/Center/groupOrder';
 // 配置路由
 let router = new VueRouter({
     routes: [
@@ -80,6 +84,27 @@ let router = new VueRouter({
             component: PaySuccess,
             meta: { show: true }
         },
+        {
+            path: '/center',
+            component: Center,
+            meta: { show: true },
+            // 二级路由组件
+            children: [
+                {
+                    path: 'myorder',
+                    component: MyOrder,
+                },
+                {
+                    path: 'grouporder',
+                    component: GroupOrder,
+                },
+                // 重定向
+                {
+                    path: '/center',
+                    redirect: '/center/myorder',
+                },
+            ]
+        }
     ],
     // 滚动行为
     scrollBehavior(to, from, savedPosition) {

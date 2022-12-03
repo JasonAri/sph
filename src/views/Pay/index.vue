@@ -134,7 +134,7 @@ export default {
               done();
             } else if (action == 'confirm') {
               // 判断支付码
-              if (this.code == 200) {
+              // if (this.code == 200) {
                 // 清除定时器
                 clearInterval(this.timer);
                 this.timer = null;
@@ -142,7 +142,7 @@ export default {
                 done();
                 // 跳转下一个路由
                 this.$router.push('/paysuccess');
-              }
+              // }
             }
           },
         }).catch((reason) => {
