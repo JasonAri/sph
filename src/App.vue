@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{ gray: $route.meta.gray }">
     <Header />
     <!-- 路由组件出口的地方 -->
     <router-view></router-view>
@@ -35,5 +35,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   /* margin-top: 60px; */
+}
+.gray {
+  -webkit-filter: grayscale(0.85) saturate(0.8);
 }
 </style>
