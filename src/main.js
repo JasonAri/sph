@@ -13,9 +13,15 @@ import TypeNav from '@/components/TypeNav';
 // 引入分页器
 import Pagination from '@/components/Pagination';
 // 统一引入api
-import *as API from '@/api'
+import *as API from '@/api';
+// 引入lazyload
+import VueLazyload from 'vue-lazyload';
+// 引入图片
+import lazyload from './assets/lazyload.gif';
+// 引入自定义插件
+import myPlugins from '@/plugins/myPlugins';
 
-// 注册ui
+// 注册element-ui
 Vue.use(Carousel);
 Vue.use(CarouselItem);
 Vue.use(Icon);
@@ -28,6 +34,11 @@ Vue.prototype.$alert = MessageBox.alert;
 Vue.component(TypeNav.name, TypeNav);
 // 注册分页器
 Vue.component(Pagination.name, Pagination);
+// 注册lazyload插件
+Vue.use(VueLazyload, {
+  loading: lazyload
+});
+Vue.use(myPlugins,{name:'Jason plugins'});
 
 Vue.config.productionTip = false;
 
