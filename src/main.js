@@ -5,7 +5,7 @@ import store from '@/store';
 // 引入路由
 import router from '@/router';
 // 按需引入element-UI
-import { Carousel, CarouselItem, Icon, skeleton, skeletonItem, empty, MessageBox } from 'element-ui';
+import { Carousel, CarouselItem, Icon, skeleton, skeletonItem, empty, MessageBox, Form, FormItem, Input, Checkbox, Button } from 'element-ui';
 // 引入mockServe（使其执行一次mock）
 import '@/mock/mockServe.js';
 // 引入三级联动组件---全局组件
@@ -28,6 +28,11 @@ Vue.use(Icon);
 Vue.use(skeleton);
 Vue.use(skeletonItem);
 Vue.use(empty);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(Input);
+Vue.use(Checkbox);
+Vue.use(Button)
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;
 // 注册组件(两个参数：全局组件的名字，哪一个组件。)
@@ -38,7 +43,7 @@ Vue.component(Pagination.name, Pagination);
 Vue.use(VueLazyload, {
   loading: lazyload
 });
-Vue.use(myPlugins,{name:'upper'});
+Vue.use(myPlugins, { name: 'upper' });
 
 Vue.config.productionTip = false;
 
