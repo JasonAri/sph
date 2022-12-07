@@ -38,7 +38,7 @@ Vue.component(Pagination.name, Pagination);
 Vue.use(VueLazyload, {
   loading: lazyload
 });
-Vue.use(myPlugins,{name:'Jason plugins'});
+Vue.use(myPlugins,{name:'upper'});
 
 Vue.config.productionTip = false;
 

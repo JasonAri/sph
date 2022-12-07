@@ -32,7 +32,7 @@ let router = new VueRouter({
             path: '/home',
             component: Home,
             // 路由元信息
-            meta: { show: true, gray: true }
+            meta: { show: true }
         },
         {
             path: '/login',
