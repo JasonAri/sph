@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 import store from '@/store';
 // 引入一级路由组件
 import Home from '@/views/Home';
-import Login from '@/views/Login';
+// import Login from '@/views/Login'; 路由懒加载
 import Search from '@/views/Search';
 import Register from '@/views/Register';
 import Detail from '@/views/Detail';
@@ -36,7 +36,7 @@ let router = new VueRouter({
         },
         {
             path: '/login',
-            component: Login,
+            component: () => import('@/views/Login'),
             meta: { show: false }
         },
         {
