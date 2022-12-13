@@ -5,21 +5,6 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 // 引入仓库
 import store from '@/store';
-// 引入一级路由组件
-import Home from '@/views/Home';
-// import Login from '@/views/Login'; 路由懒加载
-import Search from '@/views/Search';
-import Register from '@/views/Register';
-import Detail from '@/views/Detail';
-import AddCartSuccess from '@/views/AddCartSuccess';
-import ShopCart from '@/views/ShopCart';
-import Trade from '@/views/Trade';
-import Pay from '@/views/Pay';
-import PaySuccess from '@/views/PaySuccess';
-import Center from '@/views/Center';
-// 引入二级路由组件
-import MyOrder from '@/views/Center/myOrder';
-import GroupOrder from '@/views/Center/groupOrder';
 // 配置路由
 let router = new VueRouter({
     routes: [
@@ -30,7 +15,7 @@ let router = new VueRouter({
         },
         {
             path: '/home',
-            component: Home,
+            component: () => import('@/views/Home'),
             // 路由元信息
             meta: { show: true }
         },
@@ -41,7 +26,7 @@ let router = new VueRouter({
         },
         {
             path: '/search/:keyword?',
-            component: Search,
+            component: () => import('@/views/Search'),
             meta: { show: true },
             name: 'search',
             // props: true, // 只能传params
@@ -50,28 +35,28 @@ let router = new VueRouter({
         },
         {
             path: '/register',
-            component: Register,
+            component: () => import('@/views/Register'),
             meta: { show: false }
         },
         {
             path: '/detail/:skuid',
-            component: Detail,
+            component: () => import('@/views/Detail'),
             meta: { show: true }
         },
         {
             path: '/addcartsuccess',
             name: 'addcartsuccess',
-            component: AddCartSuccess,
+            component: () => import('@/views/AddCartSuccess'),
             meta: { show: true }
         },
         {
             path: '/shopcart',
-            component: ShopCart,
+            component: () => import('@/views/ShopCart'),
             meta: { show: true }
         },
         {
             path: '/trade',
-            component: Trade,
+            component: () => import('@/views/Trade'),
             meta: { show: true },
             beforeEnter: (to, from, next) => {
                 console.log(from.path, to.path)
@@ -84,7 +69,7 @@ let router = new VueRouter({
         },
         {
             path: '/pay',
-            component: Pay,
+            component: () => import('@/views/Pay'),
             meta: { show: true },
             beforeEnter: (to, from, next) => {
                 if (from.path == '/trade' || from.path == '/') {
@@ -96,22 +81,22 @@ let router = new VueRouter({
         },
         {
             path: '/paysuccess',
-            component: PaySuccess,
+            component: () => import('@/views/PaySuccess'),
             meta: { show: true }
         },
         {
             path: '/center',
-            component: Center,
+            component: () => import('@/views/Center'),
             meta: { show: true },
             // 二级路由组件
             children: [
                 {
                     path: 'myorder',
-                    component: MyOrder,
+                    component: () => import('@/views/Center/myOrder'),
                 },
                 {
                     path: 'grouporder',
-                    component: GroupOrder,
+                    component: () => import('@/views/Center/groupOrder'),
                 },
                 // 重定向
                 {
@@ -119,7 +104,7 @@ let router = new VueRouter({
                     redirect: '/center/myorder',
                 },
             ]
-        }
+        },
     ],
     // 滚动行为
     scrollBehavior(to, from, savedPosition) {
